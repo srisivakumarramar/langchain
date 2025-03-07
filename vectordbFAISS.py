@@ -1,4 +1,4 @@
-# Job Listing using FAISS (facebook similarity) Vector to chuck the charcter from a document and to find matching job skill from input of the user with chroma 
+# Job Listing using FAISS (facebook ai similarity serach) Vector to chuck the charcter from a document and to find matching job skill from input of the user with chroma 
 import os
 from langchain_ollama import OllamaEmbeddings
 from langchain_community.document_loaders import TextLoader
