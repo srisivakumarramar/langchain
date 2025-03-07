@@ -1,3 +1,4 @@
+# product-data.txt,raq_questions.txt are used for this code
 import os
 from langchain_openai import OpenAIEmbeddings,ChatOpenAI
 from langchain_community.document_loaders import TextLoader
