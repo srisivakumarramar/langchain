@@ -1,3 +1,4 @@
+# Job Listing using Chroma Vector to chuck the charcter from a document and to find matching job skill from input of the user with chroma 
 import os
 from langchain_openai import OpenAIEmbeddings
 from langchain_community.document_loaders import TextLoader
