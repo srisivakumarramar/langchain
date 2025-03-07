@@ -12,6 +12,7 @@ from langchain_community.chart_message_histories import StreamlitChatMessageHist
 from langchain_core.runnables.history import RunnableWithMessageHistory
 
 llm = OllamaEmbeddings(model="llama3.2")
+embeddings=OllamaEmbeddings(model="llama3.2")
 
 document = TextLoader("Legal_Document_Analysis_Data.txt").load()
 text_splitter = RecursiveCharacterTextSplitter(chunk_size=1000, chunk_overlap=200)
