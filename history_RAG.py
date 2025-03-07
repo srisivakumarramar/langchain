@@ -4,10 +4,12 @@ from langchain_openai import OpenAIEmbeddings,ChatOpenAI
 from langchain_community.document_loaders import TextLoader
 from langchain_text_splitters import RecursiveCharacterTextSplitter
 from langchain_chroma import Chroma
-from langchain.prompts import ChatPromptTemplate
-from langchain.chains import create_retrieval_chain
+from langchain.prompts import ChatPromptTemplate,MessagePlaceHolder
+from langchain.chains import create_retrieval_chain,create_histroy_aware_retriever
 from langchain.chains.combine_documents import create_stuff
-
+import streamlit as st
+from langchain_community.chart_message_histories import StreamlitChatMessageHistory
+from langchain_core.runnables.history import RunnableWithMessageHistory
 
 OPENAI_API_KEY = os.getenv("OPENAI_API_KEY")
 embeddings = OpenAIEmbeddings(api_key=OPENAI_API_KEY)
@@ -29,18 +31,28 @@ prompt_template = ChatPromptTemplate.from_message (
                   {context}
 
                   """),
+                  MessagePlaceHolder(variable_name="Chat_history"),
                   ("human","{input}")
   ]
 )
 
+history_aware_retriever = create_history_aware_retriever(11m,retriever,prompt_template)
 qa_chain = create_stuff_documents_chain(llm,prompt_template)
-reg_chain = input("Your Questions")
+rag_chain = create_retrieval_chain(history_aware_retrieva,qa_chain)
 
-Print("Chat with Document")
-question = input("Your Questions")
+history_for_chain = StreamlitChatMessageHistory()
+chain_with_history = RunnableWithMessageHistory(
+  rag_chain,
+  lambda session-id:history_for_chain,
+  input_message_key="input",
+  history_message_key="chat_history"
+)
+
+st.write("Chat with Document")
+question =st.text_input("Your Questions")
 
 if question:
-  response = reg_chain.invoke({"input"}:question)
-  print(response['answer']
+  response = rag_chain.invoke({"input":question},{"configurable":{"session_id":"abc123"}})
+  st.write(response['answer']
 
         
