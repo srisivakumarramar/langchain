@@ -52,7 +52,7 @@ st.write("Chat with Document")
 question =st.text_input("Your Questions")
 
 if question:
-  response = rag_chain.invoke({"input":question},{"configurable":{"session_id":"abc123"}})
+  response = chain_with_history.invoke({"input":question},{"configurable":{"session_id":"abc123"}})
   st.write(response['answer']
 
         
